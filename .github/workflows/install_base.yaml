@@ -1,19 +1,13 @@
-name: Tests
-
 on:
-  push:
+  workflow_call:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  py-test:
-    runs-on: ubuntu-latest
-
+  install:
     steps:
       - uses: actions/checkout@v2
-
-      - uses: ./.github/workflows/install_base.yaml
 
       #- uses: actions/setup-python@v2
       #  with:
