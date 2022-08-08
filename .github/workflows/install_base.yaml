@@ -7,11 +7,9 @@ on:
 jobs:
   install:
     steps:
-      - uses: actions/checkout@v2
-
-      #- uses: actions/setup-python@v2
-      #  with:
-      #    python-version: "3.10"
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
 
       #- name: Add .local path
       #  run: |
@@ -28,9 +26,3 @@ jobs:
       #  run: |
       #    poetry env use 3.10
       #    poetry install
-
-      - name: Run Tests
-        run: |
-          poetry env use 3.10
-          cd tests
-          poetry run tox
