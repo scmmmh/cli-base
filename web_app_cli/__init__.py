@@ -8,6 +8,7 @@ The CLI base will automatically load, validate, and set a configuration file. Th
 """
 import click
 import logging
+import logging.config
 import os
 import yaml
 

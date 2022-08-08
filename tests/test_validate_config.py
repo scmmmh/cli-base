@@ -3,8 +3,8 @@ import click
 import click.testing
 
 
-def test_unvalidated_config_yaml():
-    """Test running a command with an unvalidated configuration."""
+def test_valid_config():
+    """Test running a command with a validated configuration."""
     from web_app_cli import setup_cli_app, cli_app
 
     @click.command()
@@ -16,7 +16,14 @@ def test_unvalidated_config_yaml():
         """A dummy configuration set callback."""
         pass
 
-    setup_cli_app('test', set_config=set_config)
+    schema = {
+        'test': {
+            'type': 'string',
+            'allowed': ['Loaded']
+        }
+    }
+
+    setup_cli_app('test', config_schema=schema, set_config=set_config)
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
@@ -27,8 +34,8 @@ def test_unvalidated_config_yaml():
         assert result.exit_code == 0
 
 
-def test_unvalidated_config_yml():
-    """Test running a command with an unvalidated configuration."""
+def test_invalid_config():
+    """Test running a command with an invalid configuration."""
     from web_app_cli import setup_cli_app, cli_app
 
     @click.command()
@@ -40,12 +47,19 @@ def test_unvalidated_config_yml():
         """A dummy configuration set callback."""
         pass
 
-    setup_cli_app('test', set_config=set_config)
+    schema = {
+        'test': {
+            'type': 'string',
+            'allowed': ['Loaded']
+        }
+    }
+
+    setup_cli_app('test', config_schema=schema, set_config=set_config)
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
-        with open('config.yml', 'w') as f:
-            f.write('test: Loaded')
+        with open('config.yaml', 'w') as f:
+            f.write('test: Failed')
         result = runner.invoke(cli_app, ['test'])
 
-        assert result.exit_code == 0
+        assert result.exit_code == 1
