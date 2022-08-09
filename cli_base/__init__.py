@@ -1,7 +1,7 @@
 """A very simple CLI base.
 
-To use, first configure the CLI application via :func:`~web_app_cli.setup_cli_app` and then call
-:func:`~web_app_cli.cli_app`.
+To use, first configure the CLI application via :func:`~cli_base.create_cli_base`. This returns the base
+:class:`~click.Group` to which additional commands can be added..
 
 The CLI base will automatically load, validate, and set a configuration file. The validation is performed using
 `Cerberus <https://docs.python-cerberus.org>`_.
@@ -48,8 +48,8 @@ def validate_config(schema: dict, config: dict) -> dict:
         raise click.ClickException(f'Configuration errors:\n\n{error_str}')
 
 
-def create_cli_base(app_name: str, app_title: str, config_schema: dict = None, set_config: Callable[[dict], None] = None) -> None:  # noqa: E501
-    """Set the CLI application settings.
+def create_cli_base(app_name: str, app_title: str, config_schema: dict = None, set_config: Callable[[dict], None] = None) -> Callable[[], None]:  # noqa: E501
+    """Create the CLI application base.
 
     :param app_name: The name of the application - used to generate config search paths
     :type app_name: str
@@ -58,7 +58,9 @@ def create_cli_base(app_name: str, app_title: str, config_schema: dict = None, s
     :param config_schema: An optional configuration schema to validate the configuration with Cerberus
     :type config_schema: dict
     :param set_config: An optional callback to receive the validated configuration
-    :type set_config: callable
+    :type set_config: :class:`~collections.abc.Callable`
+    :return: The callable to which further commands can be added
+    :return_type: :class:`~click.Group`
     """
     @click.group(help=app_title)
     def cli_base() -> None:
