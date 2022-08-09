@@ -48,7 +48,7 @@ def validate_config(schema: dict, config: dict) -> dict:
         raise click.ClickException(f'Configuration errors:\n\n{error_str}')
 
 
-def create_cli_base(app_name: str, app_title: str, config_schema: dict = None, set_config: Callable[[dict], None] = None) -> None:
+def create_cli_base(app_name: str, app_title: str, config_schema: dict = None, set_config: Callable[[dict], None] = None) -> None:  # noqa: E501
     """Set the CLI application settings.
 
     :param app_name: The name of the application - used to generate config search paths
