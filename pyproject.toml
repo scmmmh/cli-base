@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "web-app-cli"
+name = "cli-base"
 version = "0.1.0"
 description = "A simple generic Web App CLI"
 authors = ["Mark Hall <mark.hall@work.room3b.eu>"]

@@ -5,7 +5,7 @@ import click.testing
 
 def test_valid_config_with_logging():
     """Test running a command with a validated configuration including logging."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:
@@ -42,7 +42,7 @@ logging:
 
 def test_unvalidated_config_with_logging():
     """Test running a command with an unvalidated configuration including logging."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:

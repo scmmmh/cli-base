@@ -5,7 +5,7 @@ import click.testing
 
 def test_unvalidated_config_yaml():
     """Test running a command with an unvalidated configuration."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:
@@ -29,7 +29,7 @@ def test_unvalidated_config_yaml():
 
 def test_unvalidated_config_yml():
     """Test running a command with an unvalidated configuration."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:

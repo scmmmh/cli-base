@@ -5,7 +5,7 @@ import click.testing
 
 def test_valid_config():
     """Test running a command with a validated configuration."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:
@@ -36,7 +36,7 @@ def test_valid_config():
 
 def test_invalid_config():
     """Test running a command with an invalid configuration."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:

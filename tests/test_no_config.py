@@ -5,7 +5,7 @@ import click.testing
 
 def test_no_config():
     """Test running a command with no configuration."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:
@@ -23,7 +23,7 @@ def test_no_config():
 
 def test_missing_config():
     """Test running a command with a missing configuration."""
-    from web_app_cli import setup_cli_app, cli_app
+    from cli_base import setup_cli_app, cli_app
 
     @click.command()
     def test() -> None:
