@@ -5,7 +5,7 @@ import click.testing
 
 def test_unvalidated_config_yaml():
     """Test running a command with an unvalidated configuration."""
-    from cli_base import setup_cli_app, cli_app
+    from cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -16,7 +16,7 @@ def test_unvalidated_config_yaml():
         """A dummy configuration set callback."""
         pass
 
-    setup_cli_app('test', set_config=set_config)
+    cli_app = create_cli_base('test', 'Test Application', set_config=set_config)
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
@@ -29,7 +29,7 @@ def test_unvalidated_config_yaml():
 
 def test_unvalidated_config_yml():
     """Test running a command with an unvalidated configuration."""
-    from cli_base import setup_cli_app, cli_app
+    from cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -40,7 +40,7 @@ def test_unvalidated_config_yml():
         """A dummy configuration set callback."""
         pass
 
-    setup_cli_app('test', set_config=set_config)
+    cli_app = create_cli_base('test', 'Test Application', set_config=set_config)
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():

@@ -67,4 +67,4 @@ jobs:
       - name: Run Tests
         run: |
           poetry env use 3.10
-          poetry run flake8 web_app_cli
+          poetry run flake8 cli_base

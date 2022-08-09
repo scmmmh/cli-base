@@ -17,13 +17,6 @@ from collections.abc import Callable
 from typing import Union
 
 
-app_config = {
-    'app_name': 'Unknown',
-    'config_schema': None,
-    'set_config': None,
-}
-
-
 def validate_config(schema: dict, config: dict) -> dict:
     """Validate the configuration.
 
@@ -55,46 +48,44 @@ def validate_config(schema: dict, config: dict) -> dict:
         raise click.ClickException(f'Configuration errors:\n\n{error_str}')
 
 
-def setup_cli_app(app_name: str, config_schema: dict = None, set_config: Callable[[dict], None] = None) -> None:
+def create_cli_base(app_name: str, app_title: str, config_schema: dict = None, set_config: Callable[[dict], None] = None) -> None:  # noqa: E501
     """Set the CLI application settings.
 
     :param app_name: The name of the application - used to generate config search paths
     :type app_name: str
+    :param app_title: The title of the application
+    :type app_title: str
     :param config_schema: An optional configuration schema to validate the configuration with Cerberus
     :type config_schema: dict
     :param set_config: An optional callback to receive the validated configuration
     :type set_config: callable
     """
-    app_config['app_name'] = app_name
-    app_config['config_schema'] = config_schema
-    app_config['set_config'] = set_config
+    @click.group(help=app_title)
+    def cli_base() -> None:
+        config = None
+        if set_config is not None:
+            if os.path.exists('config.yml'):
+                with open('config.yml') as in_f:
+                    config = yaml.safe_load(in_f)
+            elif os.path.exists('config.yaml'):
+                with open('config.yaml') as in_f:
+                    config = yaml.safe_load(in_f)
+            elif os.path.exists(f'/etc/{app_name}/config.yml'):
+                with open(f'/etc/{app_name}/config.yml') as in_f:
+                    config = yaml.safe_load(in_f)
+            elif os.path.exists(f'/etc/{app_name}/config.yaml'):
+                with open(f'/etc/{app_name}/config.yaml') as in_f:
+                    config = yaml.safe_load(in_f)
+            if not config:
+                raise click.ClickException(f'No configuration found (./config.y[a]ml, /etc/{app_name}/config.y[a]ml)')  # noqa: E501
+            if config_schema is not None:
+                normalised = validate_config(config_schema, config)
+                set_config(normalised)
+                if 'logging' in normalised:
+                    logging.config.dictConfig(normalised['logging'])
+            else:
+                set_config(config)
+                if 'logging' in config:
+                    logging.config.dictConfig(config['logging'])
 
-
-@click.group()
-def cli_app() -> None:
-    """Command-line interface."""
-    config = None
-    if app_config['set_config']:
-        if os.path.exists('config.yml'):
-            with open('config.yml') as in_f:
-                config = yaml.safe_load(in_f)
-        elif os.path.exists('config.yaml'):
-            with open('config.yaml') as in_f:
-                config = yaml.safe_load(in_f)
-        elif os.path.exists(f'/etc/{app_config["app_name"]}/config.yml'):
-            with open(f'/etc/{app_config["app_name"]}/config.yml') as in_f:
-                config = yaml.safe_load(in_f)
-        elif os.path.exists(f'/etc/{app_config["app_name"]}/config.yaml'):
-            with open(f'/etc/{app_config["app_name"]}/config.yaml') as in_f:
-                config = yaml.safe_load(in_f)
-        if not config:
-            raise click.ClickException(f'No configuration found (./config.y[a]ml, /etc/{app_config["app_name"]}/config.y[a]ml)')  # noqa: E501
-        if app_config['config_schema']:
-            normalised = validate_config(app_config['config_schema'], config)
-            app_config['set_config'](normalised)
-            if 'logging' in normalised:
-                logging.config.dictConfig(normalised['logging'])
-        else:
-            app_config['set_config'](config)
-            if 'logging' in config:
-                logging.config.dictConfig(config['logging'])
+    return cli_base

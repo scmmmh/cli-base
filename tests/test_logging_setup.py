@@ -5,7 +5,7 @@ import click.testing
 
 def test_valid_config_with_logging():
     """Test running a command with a validated configuration including logging."""
-    from cli_base import setup_cli_app, cli_app
+    from cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -26,7 +26,7 @@ def test_valid_config_with_logging():
         }
     }
 
-    setup_cli_app('test', config_schema=schema, set_config=set_config)
+    cli_app = create_cli_base('test', 'Test Application', config_schema=schema, set_config=set_config)
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
@@ -42,7 +42,7 @@ logging:
 
 def test_unvalidated_config_with_logging():
     """Test running a command with an unvalidated configuration including logging."""
-    from cli_base import setup_cli_app, cli_app
+    from cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -53,7 +53,7 @@ def test_unvalidated_config_with_logging():
         """A dummy configuration set callback."""
         pass
 
-    setup_cli_app('test', set_config=set_config)
+    cli_app = create_cli_base('test', 'Test Application', set_config=set_config)
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
