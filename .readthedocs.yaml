@@ -5,10 +5,7 @@ build:
   tools:
     python: "3.10"
   jobs:
-    pre_create_environment:
-      - asdf plugin add poetry
-      - asdf install poetry latest
-      - asdf global poetry latest
-      - poetry config virtualenvs.create false
-    post_install:
-      - poetry install
+    post_create_environment:
+      - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      - $HOME/.poetry/bin/poetry config virtualenvs.create false
+      - $HOME/.poetry/bin/poetry install
