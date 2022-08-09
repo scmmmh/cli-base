@@ -5,14 +5,14 @@ import click.testing
 
 def test_no_config():
     """Test running a command with no configuration."""
-    from cli_base import setup_cli_app, cli_app
+    from cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
         """A dummy command for testing."""
         pass
 
-    setup_cli_app('test')
+    cli_app = create_cli_base('test', 'Test Application')
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
@@ -23,7 +23,7 @@ def test_no_config():
 
 def test_missing_config():
     """Test running a command with a missing configuration."""
-    from cli_base import setup_cli_app, cli_app
+    from cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -34,7 +34,7 @@ def test_missing_config():
         """A dummy configuration set callback."""
         pass
 
-    setup_cli_app('test', config_schema={'test': {'type': 'string'}}, set_config=set_config)
+    cli_app = create_cli_base('test', 'Test Application', config_schema={'test': {'type': 'string'}}, set_config=set_config)  # noqa: E501
     cli_app.add_command(test)
     runner = click.testing.CliRunner()
     with runner.isolated_filesystem():
