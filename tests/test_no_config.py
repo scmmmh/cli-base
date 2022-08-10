@@ -3,9 +3,9 @@ import click
 import click.testing
 
 
-def test_no_config():
+def test_no_config() -> None:
     """Test running a command with no configuration."""
-    from cli_base import create_cli_base
+    from generic_cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -21,9 +21,9 @@ def test_no_config():
         assert result.exit_code == 0
 
 
-def test_missing_config():
+def test_missing_config() -> None:
     """Test running a command with a missing configuration."""
-    from cli_base import create_cli_base
+    from generic_cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -31,7 +31,7 @@ def test_missing_config():
         pass
 
     def set_config(config: dict) -> None:
-        """A dummy configuration set callback."""
+        """Set the configuration."""
         pass
 
     cli_app = create_cli_base('test', 'Test Application', config_schema={'test': {'type': 'string'}}, set_config=set_config)  # noqa: E501
