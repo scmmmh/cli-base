@@ -68,7 +68,7 @@ jobs:
       - name: Run Tests
         run: |
           poetry env use 3.10
-          poetry run flake8 cli_base
+          poetry run flake8 generic_cli_base
 
   documentation:
     runs-on: ubuntu-latest
