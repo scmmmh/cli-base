@@ -1,6 +1,6 @@
-# CLI Base - Simple CLI Application Base
+# Generic CLI Base - Simple CLI Application Base
 
-The CLI Base is a simple python library that provides the base for creating a commandline (CLI) application.
+The Generic CLI Base is a simple python library that provides the base for creating a commandline (CLI) application.
 
 It uses [Click](https://click.palletsprojects.com) as the underlying library providing the CLI functionality and
 [Cerberus](https://docs.python-cerberus.org) to validate an optional configuration file.
@@ -19,7 +19,7 @@ file, and with validated configuration file.
 ```python
 import click
 
-from cli_base import create_cli_base
+from generic_cli_base import create_cli_base
 
 
 @click.command()
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 ```python
 import click
 
-from cli_base import create_cli_base
+from generic_cli_base import create_cli_base
 
 config = None
 
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 ```python
 import click
 
-from cli_base import create_cli_base
+from generic_cli_base import create_cli_base
 
 config = None
 

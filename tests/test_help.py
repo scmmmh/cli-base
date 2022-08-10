@@ -3,9 +3,9 @@ import click
 import click.testing
 
 
-def test_help():
+def test_help() -> None:
     """Test running the help command."""
-    from cli_base import create_cli_base
+    from generic_cli_base import create_cli_base
 
     @click.command(help='Dummy command')
     def test() -> None:

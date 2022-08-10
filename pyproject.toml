@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "cli-base"
+name = "generic-cli-base"
 version = "0.1.0"
 description = "A simple Commandline Application Base"
 authors = ["Mark Hall <mark.hall@work.room3b.eu>"]

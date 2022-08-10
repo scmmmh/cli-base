@@ -3,9 +3,9 @@ import click
 import click.testing
 
 
-def test_valid_config_with_logging():
+def test_valid_config_with_logging() -> None:
     """Test running a command with a validated configuration including logging."""
-    from cli_base import create_cli_base
+    from generic_cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -13,7 +13,7 @@ def test_valid_config_with_logging():
         pass
 
     def set_config(config: dict) -> None:
-        """A dummy configuration set callback."""
+        """Set the configuration."""
         pass
 
     schema = {
@@ -40,9 +40,9 @@ logging:
         assert result.exit_code == 0
 
 
-def test_unvalidated_config_with_logging():
+def test_unvalidated_config_with_logging() -> None:
     """Test running a command with an unvalidated configuration including logging."""
-    from cli_base import create_cli_base
+    from generic_cli_base import create_cli_base
 
     @click.command()
     def test() -> None:
@@ -50,7 +50,7 @@ def test_unvalidated_config_with_logging():
         pass
 
     def set_config(config: dict) -> None:
-        """A dummy configuration set callback."""
+        """Set the configuration."""
         pass
 
     cli_app = create_cli_base('test', 'Test Application', set_config=set_config)
