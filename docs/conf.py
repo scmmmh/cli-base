@@ -7,7 +7,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'CLI Base'
+project = 'Generic CLI Base'
 copyright = '2022, Mark Hall'
 author = 'Mark Hall'
 release = '0.1.0'
